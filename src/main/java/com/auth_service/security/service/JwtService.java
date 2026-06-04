@@ -22,7 +22,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtService {
 
-    private final JwtConfigurationProperties SECRET_KEY;
+    private final JwtConfigurationProperties jwtConfigurationProperties;
 
     public String generateToken(CustomUserDetails userDetails, Integer expiration) {
         return Jwts.builder()
@@ -64,13 +64,13 @@ public class JwtService {
     private Key getSigningKey() {
         log.info("Entering getSigningKey() method");
 
-        SecretKey secretKey = Keys.hmacShaKeyFor(SECRET_KEY.secret().getBytes());
+        SecretKey secretKey = Keys.hmacShaKeyFor(jwtConfigurationProperties.secret().getBytes());
 
         log.info("Exit getSigningKey() method");
         return secretKey;
     }
 
     private Key getKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.secret().getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(jwtConfigurationProperties.secret().getBytes(StandardCharsets.UTF_8));
     }
 }

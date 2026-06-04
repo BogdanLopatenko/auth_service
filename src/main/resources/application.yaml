@@ -18,6 +18,7 @@ logging:
 spring:
   application:
     name: ${APPLICATION_NAME:auth-service}
+    public-url: https://auth-service
   kafka:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
@@ -37,8 +38,6 @@ grpc:
       address: "discovery:///user-service"
       negotiation-type: plaintext
 
-app:
-  public-url: https://auth-service
 
 eureka:
   instance:
