@@ -1,5 +1,6 @@
 package com.auth_service.security.service;
 
+import com.auth_service.config.properties.JwtConfigurationProperties;
 import com.auth_service.constant.SecurityConstant;
 import com.auth_service.dto.security.CustomUserDetails;
 import io.jsonwebtoken.Claims;
@@ -7,8 +8,8 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -18,10 +19,10 @@ import java.util.Date;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    private String SECRET_KEY;
+    private final JwtConfigurationProperties SECRET_KEY;
 
     public String generateToken(CustomUserDetails userDetails, Integer expiration) {
         return Jwts.builder()
@@ -63,13 +64,13 @@ public class JwtService {
     private Key getSigningKey() {
         log.info("Entering getSigningKey() method");
 
-        SecretKey secretKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        SecretKey secretKey = Keys.hmacShaKeyFor(SECRET_KEY.secret().getBytes());
 
         log.info("Exit getSigningKey() method");
         return secretKey;
     }
 
     private Key getKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(SECRET_KEY.secret().getBytes(StandardCharsets.UTF_8));
     }
 }
