@@ -8,7 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class AuthHelperImpl implements AuthHelper {
 
-    @Value("${app.public-url}")
+    @Value("${spring.application.public-url}")
     private String publicUrl;
 
 

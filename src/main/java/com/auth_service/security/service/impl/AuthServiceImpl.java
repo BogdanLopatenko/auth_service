@@ -1,6 +1,7 @@
 package com.auth_service.security.service.impl;
 
 import com.auth_service.client.UserClient;
+import com.auth_service.config.properties.JwtConfigurationProperties;
 import com.auth_service.constant.AuthConstant;
 import com.auth_service.constant.ExceptionConstant;
 import com.auth_service.dto.MailDto;
@@ -16,7 +17,6 @@ import com.auth_service.security.service.AuthService;
 import com.auth_service.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,11 +28,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Value("${jwt.access-expiration-time}")
-    private Integer ACCESS_TOKEN_EXPIRATION_TIME;
+    private final JwtConfigurationProperties jwtConfigurationProperties;
 
-    @Value("${jwt.refresh-expiration-time}")
-    private Integer REFRESH_TOKEN_EXPIRATION_TIME;
     private final UserClient userClient;
 
     private final AuthHelper authHelper;
@@ -120,8 +117,8 @@ public class AuthServiceImpl implements AuthService {
 
     private AuthResponse generateTokens(CustomUserDetails customUserDetails) {
 
-        String accessToken = jwtService.generateToken(customUserDetails, ACCESS_TOKEN_EXPIRATION_TIME);
-        String refreshToken = jwtService.generateToken(customUserDetails, REFRESH_TOKEN_EXPIRATION_TIME);
+        String accessToken = jwtService.generateToken(customUserDetails, jwtConfigurationProperties.accessExpirationTime());
+        String refreshToken = jwtService.generateToken(customUserDetails, jwtConfigurationProperties.refreshExpirationTime());
 
         return new AuthResponse(accessToken, refreshToken);
     }
