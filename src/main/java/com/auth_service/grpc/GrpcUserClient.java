@@ -1,4 +1,4 @@
-package com.auth_service.client.grpc;
+package com.auth_service.grpc;
 
 import com.auth_service.client.UserClient;
 import com.auth_service.dto.UserAuthDto;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 @Component
 @RequiredArgsConstructor
-public class UserClientAdapter implements UserClient {
+public class GrpcUserClient implements UserClient {
 
     @GrpcClient(value = "user-service")
     private UserServiceGrpc.UserServiceBlockingStub userStub;
