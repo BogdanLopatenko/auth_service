@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option java_package = "com.mailing_service.generated";
+option java_multiple_files = true;
+
+package mailing;
+
+service MailingService {
+
+  rpc SendMail (MailDto) returns (google.protobuf.Empty);
+
+}
+
+message MailDto {
+
+  string email = 1;
+  string theme = 2;
+  string text = 3;
+}
