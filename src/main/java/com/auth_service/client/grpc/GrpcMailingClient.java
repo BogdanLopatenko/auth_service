@@ -1,4 +1,4 @@
-package com.auth_service.grpc;
+package com.auth_service.client.grpc;
 
 import com.auth_service.client.MailingClient;
 import com.auth_service.dto.MailDto;
