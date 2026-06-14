@@ -1,4 +1,4 @@
-package com.auth_service.feign.decoder;
+package com.auth_service.client.feign.decoder;
 
 import com.auth_service.constant.ExceptionConstant;
 import com.auth_service.dto.ErrorResponse;

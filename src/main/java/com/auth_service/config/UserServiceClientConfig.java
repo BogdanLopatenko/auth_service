@@ -1,6 +1,6 @@
 package com.auth_service.config;
 
-import com.auth_service.feign.decoder.UserServiceDecoder;
+import com.auth_service.client.feign.decoder.UserServiceDecoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
