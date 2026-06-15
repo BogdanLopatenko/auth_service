@@ -119,17 +119,4 @@ public class JwtServiceTest {
         assertThrows(JwtException.class,
                 () -> jwtService.extractUsername("invalid.jwt.token"));
     }
-
-    private static CustomUserDetails mockUser() {
-        CustomUserDetails user = mock(CustomUserDetails.class);
-
-        when(user.getUsername()).thenReturn("john");
-        when(user.getEmail()).thenReturn("john@test.com");
-        when(user.getAuthorities())
-                .thenReturn((Collection) List.of(
-                        new SimpleGrantedAuthority("ROLE_USER")
-                ));
-
-        return user;
-    }
 }
