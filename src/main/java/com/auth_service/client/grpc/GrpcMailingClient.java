@@ -1,4 +1,4 @@
-package com.auth_service.grpc;
+package com.auth_service.client.grpc;
 
 import com.auth_service.client.MailingClient;
 import com.auth_service.dto.MailDto;
@@ -6,7 +6,6 @@ import com.auth_service.mapper.MailProtoMapper;
 import com.mailing_service.generated.MailingServiceGrpc;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,8 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GrpcMailingClient implements MailingClient {
 
-    @GrpcClient(value = "mailing_service")
-    private MailingServiceGrpc.MailingServiceBlockingStub mailingStub;
+    private final MailingServiceGrpc.MailingServiceBlockingStub mailingStub;
 
     private final MailProtoMapper mailProtoMapper;
 

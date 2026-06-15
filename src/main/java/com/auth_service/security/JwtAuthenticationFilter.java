@@ -43,13 +43,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
         log.debug("🔸 Extracted JWT: {}", token);
+
         String username = jwtService.extractUsername(token);
         log.debug("✅ Extracted username from JWT: {}", username);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             CustomUserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            log.debug("🔍 Token valid for user '{}': {}", username, username);
+            log.debug("🔍 Token valid for user {}", username);
 
             if (jwtService.isTokenValid(token)) {
                 UsernamePasswordAuthenticationToken authToken =

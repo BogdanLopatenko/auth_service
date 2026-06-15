@@ -37,9 +37,7 @@ public class GrpcExceptionHandler {
                 ErrorInfo info = unpack(any, ErrorInfo.class);
 
                 return mapByErrorCode(info);
-            }
-
-            if (any.is(com.google.rpc.BadRequest.class)) {
+            } else if (any.is(com.google.rpc.BadRequest.class)) {
                 com.google.rpc.BadRequest badRequest =
                         unpack(any, com.google.rpc.BadRequest.class);
 

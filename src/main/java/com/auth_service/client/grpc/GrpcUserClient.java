@@ -1,4 +1,4 @@
-package com.auth_service.grpc;
+package com.auth_service.client.grpc;
 
 import com.auth_service.client.UserClient;
 import com.auth_service.dto.UserAuthDto;
@@ -12,7 +12,6 @@ import com.user_service.generated.UserServiceGrpc;
 import com.user_service.generated.Username;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
-import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
@@ -21,8 +20,7 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class GrpcUserClient implements UserClient {
 
-    @GrpcClient(value = "user-service")
-    private UserServiceGrpc.UserServiceBlockingStub userStub;
+    private final UserServiceGrpc.UserServiceBlockingStub userStub;
 
     private final UserProtoMapper userMapper;
 
@@ -39,7 +37,6 @@ public class GrpcUserClient implements UserClient {
             com.user_service.generated.UserAuthDto response = userStub.getByUsername(request);
 
             return userMapper.toAuthDtoFromProto(response);
-
         });
     }
 
@@ -53,7 +50,6 @@ public class GrpcUserClient implements UserClient {
             com.user_service.generated.UserResponseDto response = userStub.getUserByConfirmationToken(request);
 
             return userMapper.toResponseDtoFromProto(response);
-
         });
     }
 
@@ -67,7 +63,6 @@ public class GrpcUserClient implements UserClient {
             com.user_service.generated.UserResponseDto response = userStub.create(request);
 
             return userMapper.toResponseDtoFromProto(response);
-
         });
     }
 
@@ -81,7 +76,6 @@ public class GrpcUserClient implements UserClient {
             ConfirmationToken confirmationToken = userStub.generateEmailVerificationToken(request);
 
             return confirmationToken.getToken();
-
         });
     }
 
@@ -94,10 +88,9 @@ public class GrpcUserClient implements UserClient {
 
             return userStub.verifyUserEmail(request);
         });
-
     }
 
-    private <T> T execute(Supplier<T> call){
+    private <T> T execute(Supplier<T> call) {
 
         try {
 
