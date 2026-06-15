@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class ControllerLogging {
 
     @Around("within(@org.springframework.web.bind.annotation.RestController *)")
-    public Object logControllerLayer(ProceedingJoinPoint joinPoint) throws Throwable{
+    public Object logControllerLayer(ProceedingJoinPoint joinPoint) throws Throwable {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 

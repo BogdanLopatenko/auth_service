@@ -15,7 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.user_service.generated.ErrorCode.*;
+import static com.user_service.generated.ErrorCode.ERROR_CODE_UNSPECIFIED;
+import static com.user_service.generated.ErrorCode.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 

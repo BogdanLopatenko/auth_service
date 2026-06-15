@@ -8,4 +8,5 @@ public record JwtConfigurationProperties
                 String secret,
                 Integer accessExpirationTime,
                 Integer refreshExpirationTime
-        ) {}
+        ) {
+}
