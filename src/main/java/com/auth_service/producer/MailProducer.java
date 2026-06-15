@@ -15,7 +15,7 @@ public class MailProducer {
     @Value("${spring.kafka.topics.mailing}")
     private String topic;
 
-    public void sendMail(MailDto dto){
+    public void sendMail(MailDto dto) {
 
         kafkaTemplate.send(topic, dto);
     }

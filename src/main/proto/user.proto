@@ -80,7 +80,7 @@ message ConfirmationToken {
 
 message ErrorInfo {
 
-  ErrorCode error_code= 1;
+  ErrorCode error_code = 1;
 
   string message = 2;
 }

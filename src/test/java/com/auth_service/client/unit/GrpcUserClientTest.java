@@ -260,7 +260,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void verifyUserEmail_Success_ShouldChangeUserStatus(){
+    void verifyUserEmail_Success_ShouldChangeUserStatus() {
 
         ConfirmationToken confirmationToken = ConfirmationToken.newBuilder().setToken("token").build();
 
