@@ -65,7 +65,6 @@ class CustomUserDetailsServiceImplTest {
         }, "Should throw UserNotFoundException when username not exist");
 
         verify(userClient).getByUsername("someusername");
-
-
     }
 }
+
