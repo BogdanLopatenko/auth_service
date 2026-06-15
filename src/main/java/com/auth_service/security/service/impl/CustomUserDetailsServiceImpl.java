@@ -21,24 +21,12 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
     private final UserClient userClient;
 
-
     @Override
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserAuthDto byUsername;
+        log.info("Trying to get user by username: {}", username);
 
-        try {
-
-            log.info("Trying to get user by username: {}", username);
-
-            byUsername = userClient.getByUsername(username);
-
-        } catch (FeignException.NotFound e) {
-
-            log.error("User not found", e);
-
-            throw new UserNotFoundException(e.getMessage());
-        }
+        UserAuthDto byUsername = userClient.getByUsername(username);
 
         log.info("User was successfully found");
 
