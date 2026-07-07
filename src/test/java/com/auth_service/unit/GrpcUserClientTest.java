@@ -1,5 +1,6 @@
 package com.auth_service.unit;
 
+import com.auth_service.config.properties.GrpcConfigurationProperties;
 import com.auth_service.enums.UserStatus;
 import com.auth_service.exception.handler.GrpcExceptionHandler;
 import com.auth_service.grpc.GrpcUserClient;
@@ -9,12 +10,14 @@ import com.google.protobuf.Empty;
 import com.user_service.generated.*;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -32,8 +35,23 @@ public class GrpcUserClientTest {
     @Mock
     private GrpcExceptionHandler exceptionHandler;
 
-    @InjectMocks
+    private final GrpcConfigurationProperties grpcConfigurationProperties = new GrpcConfigurationProperties((short) 1);
+
     private GrpcUserClient grpcUserClient;
+
+    @BeforeEach
+    void setUp() {
+
+        this.grpcUserClient = new GrpcUserClient(
+                userStub,
+                userMapper,
+                exceptionHandler,
+                grpcConfigurationProperties
+        );
+
+        when(userStub.withDeadlineAfter(anyLong(), any(TimeUnit.class)))
+                .thenReturn(userStub);
+    }
 
     @Test
     void getByUsername_Success_ReturnsAuthDto() {
@@ -259,7 +277,7 @@ public class GrpcUserClientTest {
         ConfirmationToken confirmationToken = ConfirmationToken.newBuilder().setToken("token").build();
 
         when(userStub.confirmUserEmail(confirmationToken))
-                .thenReturn(any());
+                .thenReturn(Empty.getDefaultInstance());
 
         grpcUserClient.confirmUserEmail(confirmationToken.getToken());
 
