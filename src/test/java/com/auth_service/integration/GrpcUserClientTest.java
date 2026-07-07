@@ -11,13 +11,10 @@ import com.auth_service.exception.user_service.EmailConfirmationNotFoundExceptio
 import com.auth_service.exception.user_service.EmailConfirmationTokenExpirationException;
 import com.auth_service.exception.user_service.UserNotFoundException;
 import com.auth_service.integration.server.TestGrpcUserServer;
+import com.auth_service.util.GrpcTestUtil;
 import com.auth_service.util.UserTestBuilder;
-import com.google.protobuf.Any;
 import com.google.rpc.Code;
 import com.user_service.generated.ErrorCode;
-import com.user_service.generated.ErrorInfo;
-import io.grpc.StatusRuntimeException;
-import io.grpc.protobuf.StatusProto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,7 +56,7 @@ public class GrpcUserClientTest {
     @Test
     void shouldThrowUserNotFoundExceptionWhenUserNotExistByUsername() {
 
-        TestGrpcUserServer.setForcedError(createForcedGrpcException(
+        TestGrpcUserServer.setForcedError(GrpcTestUtil.createStatusRuntimeException(
                 Code.NOT_FOUND,
                 ErrorCode.USER_NOT_FOUND,
                 "UserNot Found in db",
@@ -96,7 +93,7 @@ public class GrpcUserClientTest {
 
         String invalidToken = "invalidToken";
 
-        TestGrpcUserServer.setForcedError(createForcedGrpcException(
+        TestGrpcUserServer.setForcedError(GrpcTestUtil.createStatusRuntimeException(
                 Code.NOT_FOUND,
                 ErrorCode.USER_EMAIL_CONFIRMATION_NOT_FOUND,
                 "Email confirmation not found",
@@ -125,7 +122,7 @@ public class GrpcUserClientTest {
 
         UserRequestDto request = new UserTestBuilder().buildRequestDto();
 
-        TestGrpcUserServer.setForcedError(createForcedGrpcException(
+        TestGrpcUserServer.setForcedError(GrpcTestUtil.createStatusRuntimeException(
                 Code.ALREADY_EXISTS,
                 ErrorCode.EMAIL_ALREADY_EXIST,
                 "Email already exist in db",
@@ -152,7 +149,7 @@ public class GrpcUserClientTest {
 
         Long userId = 9999999L;
 
-        TestGrpcUserServer.setForcedError(createForcedGrpcException(
+        TestGrpcUserServer.setForcedError(GrpcTestUtil.createStatusRuntimeException(
                 Code.NOT_FOUND,
                 ErrorCode.USER_NOT_FOUND,
                 "User not found",
@@ -184,7 +181,7 @@ public class GrpcUserClientTest {
     @Test
     void shouldThrowEmailConfirmationTokenExpirationException() {
 
-        TestGrpcUserServer.setForcedError(createForcedGrpcException(
+        TestGrpcUserServer.setForcedError(GrpcTestUtil.createStatusRuntimeException(
                 Code.UNAUTHENTICATED,
                 ErrorCode.USER_EMAIL_CONFIRMATION_TOKEN_EXPIRED,
                 "Token had been expired",
@@ -196,28 +193,4 @@ public class GrpcUserClientTest {
             client.confirmUserEmail("sometoken");
         });
     }
-
-
-    private StatusRuntimeException createForcedGrpcException(
-            com.google.rpc.Code grpcCode,
-            ErrorCode errorCode,
-            String grpcMessage,
-            String errorMessage
-    ) {
-
-        ErrorInfo errorInfo = ErrorInfo.newBuilder()
-                .setErrorCode(errorCode)
-                .setMessage(errorMessage)
-                .build();
-
-        com.google.rpc.Status rpcStatus = com.google.rpc.Status.newBuilder()
-                .setCode(grpcCode.getNumber())
-                .setMessage(grpcMessage)
-                .addDetails(Any.pack(errorInfo))
-                .build();
-
-        return StatusProto.toStatusRuntimeException(rpcStatus);
-    }
-
-
 }
