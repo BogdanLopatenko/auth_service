@@ -15,9 +15,9 @@ service UserService {
 
   rpc Create (UserRequestDto) returns (UserResponseDto);
 
-  rpc GenerateEmailVerificationToken (UserId) returns (ConfirmationToken);
+  rpc GenerateEmailConfirmationToken (UserId) returns (ConfirmationToken);
 
-  rpc VerifyUserEmail (ConfirmationToken) returns (google.protobuf.Empty);
+  rpc ConfirmUserEmail (ConfirmationToken) returns (google.protobuf.Empty);
 }
 
 message UserResponseDto {
@@ -94,4 +94,5 @@ enum ErrorCode {
   USERNAME_ALREADY_EXIST = 4;
   USER_EMAIL_CONFIRMATION_NOT_FOUND = 5;
   USER_EMAIL_CONFIRMATION_TOKEN_EXPIRED = 6;
+  DEADLINE_EXCEED = 7;
 }

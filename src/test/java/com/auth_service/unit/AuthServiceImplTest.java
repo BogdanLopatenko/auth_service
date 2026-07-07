@@ -1,4 +1,4 @@
-package com.auth_service.client.unit;
+package com.auth_service.unit;
 
 import com.auth_service.client.UserClient;
 import com.auth_service.config.properties.JwtConfigurationProperties;
@@ -62,7 +62,6 @@ public class AuthServiceImplTest {
     @Test
     void register_ShouldRegisterUser_AndReturnTokens() {
 
-        // given
         UserRequestDto request = new UserTestBuilder().buildRequestDto();
         UserResponseDto createdUser = new UserTestBuilder().buildResponseDto();
         CustomUserDetails userDetails = mock(CustomUserDetails.class);

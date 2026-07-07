@@ -3,9 +3,15 @@ package com.auth_service.util;
 import com.auth_service.dto.UserAuthDto;
 import com.auth_service.dto.UserRequestDto;
 import com.auth_service.dto.UserResponseDto;
+import com.auth_service.dto.security.AuthRequest;
+import com.auth_service.dto.security.AuthResponse;
+import com.auth_service.dto.security.CustomUserDetails;
 import com.auth_service.enums.UserRole;
 import com.auth_service.enums.UserStatus;
 import com.user_service.generated.UserId;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.List;
 
 public class UserTestBuilder {
 
@@ -116,6 +122,33 @@ public class UserTestBuilder {
                 password,
                 email,
                 role
+        );
+    }
+
+    public AuthRequest buildAuthRequestDto() {
+
+        return new AuthRequest(
+                username,
+                password
+        );
+    }
+
+    public AuthResponse buildAuthResponseDto() {
+
+        return new AuthResponse(
+                "someAccessToken",
+                "someRefreshToken"
+        );
+    }
+
+    public CustomUserDetails buildCustomUserDetails(){
+
+        return new CustomUserDetails(
+                username,
+                password,
+                email,
+                List.of(
+                        new SimpleGrantedAuthority(role.name()))
         );
     }
 

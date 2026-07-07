@@ -1,4 +1,4 @@
-package com.auth_service.client.unit;
+package com.auth_service.unit;
 
 import com.auth_service.config.properties.JwtConfigurationProperties;
 import com.auth_service.dto.security.CustomUserDetails;

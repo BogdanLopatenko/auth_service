@@ -59,13 +59,13 @@ public class AuthServiceImpl implements AuthService {
 
         log.info("Trying to generate confirmation token email: {}", createdUser.getEmail());
 
-        String emailVerificationToken = userClient.generateEmailConfirmationToken(createdUser.getId());
+        String emailConfirmationToken = userClient.generateEmailConfirmationToken(createdUser.getId());
 
         log.info("Confirmation token was successfully generated");
 
         log.info("Trying to send confirmation mail");
 
-        String url = authHelper.constructEmailConfirmationUrl(emailVerificationToken);
+        String url = authHelper.constructEmailConfirmationUrl(emailConfirmationToken);
 
         mailProducer.sendMail(constructMail(
                 createdUser.getEmail(),

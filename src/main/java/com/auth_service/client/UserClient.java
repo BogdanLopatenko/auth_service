@@ -14,5 +14,5 @@ public interface UserClient {
 
     String generateEmailConfirmationToken(Long userId);
 
-    void verifyUserEmail(String token);
+    void confirmUserEmail(String token);
 }
