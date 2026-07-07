@@ -2,17 +2,13 @@ package com.auth_service.exception.handler;
 
 import com.auth_service.constant.ExceptionConstant;
 import com.auth_service.exception.NoRpcStatusException;
+import com.auth_service.exception.TimeoutException;
 import com.auth_service.exception.UnpackException;
-import com.auth_service.exception.user_service.EmailAlreadyActivatedException;
-import com.auth_service.exception.user_service.EmailAlreadyExistException;
-import com.auth_service.exception.user_service.EmailConfirmationTokenExpirationException;
-import com.auth_service.exception.user_service.UserEmailConfirmationNotFoundException;
-import com.auth_service.exception.user_service.UserNotFoundException;
-import com.auth_service.exception.user_service.UserServiceException;
-import com.auth_service.exception.user_service.UsernameAlreadyExistException;
+import com.auth_service.exception.user_service.*;
 import com.google.protobuf.Any;
 import com.google.protobuf.Message;
 import com.user_service.generated.ErrorInfo;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.protobuf.StatusProto;
 import jakarta.validation.ValidationException;
@@ -22,6 +18,11 @@ import org.springframework.stereotype.Component;
 public class GrpcExceptionHandler {
 
     public RuntimeException handleGrpcException(StatusRuntimeException exception) {
+
+        if (exception.getStatus().getCode() == Status.Code.DEADLINE_EXCEEDED) {
+
+            return new TimeoutException(ExceptionConstant.GRPC_RESPONSE_TIMEOUT);
+        }
 
         com.google.rpc.Status rpcStatus = StatusProto.fromThrowable(exception);
 
@@ -71,10 +72,11 @@ public class GrpcExceptionHandler {
             case USERNAME_ALREADY_EXIST:
                 return new UsernameAlreadyExistException(info.getMessage());
             case USER_EMAIL_CONFIRMATION_NOT_FOUND:
-                return new UserEmailConfirmationNotFoundException(info.getMessage());
+                return new EmailConfirmationNotFoundException(info.getMessage());
             case USER_EMAIL_CONFIRMATION_TOKEN_EXPIRED:
                 return new EmailConfirmationTokenExpirationException(info.getMessage());
-
+            case DEADLINE_EXCEED:
+                return new TimeoutException(info.getMessage());
             default:
                 return new UserServiceException(ExceptionConstant.USER_SERVICE_UNEXPECTED);
         }

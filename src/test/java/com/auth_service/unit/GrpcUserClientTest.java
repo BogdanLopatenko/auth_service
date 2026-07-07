@@ -1,18 +1,12 @@
-package com.auth_service.client.unit;
+package com.auth_service.unit;
 
-import com.auth_service.client.grpc.GrpcUserClient;
 import com.auth_service.enums.UserStatus;
 import com.auth_service.exception.handler.GrpcExceptionHandler;
+import com.auth_service.grpc.GrpcUserClient;
 import com.auth_service.mapper.UserProtoMapper;
 import com.auth_service.util.UserTestBuilder;
 import com.google.protobuf.Empty;
-import com.user_service.generated.ConfirmationToken;
-import com.user_service.generated.UserAuthDto;
-import com.user_service.generated.UserId;
-import com.user_service.generated.UserRequestDto;
-import com.user_service.generated.UserResponseDto;
-import com.user_service.generated.UserServiceGrpc;
-import com.user_service.generated.Username;
+import com.user_service.generated.*;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.Test;
@@ -228,7 +222,7 @@ public class GrpcUserClientTest {
 
         ConfirmationToken confirmationToken = ConfirmationToken.newBuilder().build();
 
-        when(userStub.generateEmailVerificationToken(userId))
+        when(userStub.generateEmailConfirmationToken(userId))
                 .thenReturn(confirmationToken);
 
         String token = grpcUserClient.generateEmailConfirmationToken(userId.getId());
@@ -245,14 +239,14 @@ public class GrpcUserClientTest {
 
         UserId userId = new UserTestBuilder().withId(2L).buildUserId();
 
-        when(userStub.generateEmailVerificationToken(userId))
+        when(userStub.generateEmailConfirmationToken(userId))
                 .thenReturn(ConfirmationToken.getDefaultInstance());
 
         grpcUserClient.generateEmailConfirmationToken(userid);
 
         ArgumentCaptor<UserId> captor = ArgumentCaptor.forClass(UserId.class);
 
-        verify(userStub).generateEmailVerificationToken(captor.capture());
+        verify(userStub).generateEmailConfirmationToken(captor.capture());
 
         UserId request = captor.getValue();
 
@@ -260,34 +254,34 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void verifyUserEmail_Success_ShouldChangeUserStatus() {
+    void confirmUserEmail_Success_ShouldChangeUserStatus() {
 
         ConfirmationToken confirmationToken = ConfirmationToken.newBuilder().setToken("token").build();
 
-        when(userStub.verifyUserEmail(confirmationToken))
+        when(userStub.confirmUserEmail(confirmationToken))
                 .thenReturn(any());
 
-        grpcUserClient.verifyUserEmail(confirmationToken.getToken());
+        grpcUserClient.confirmUserEmail(confirmationToken.getToken());
 
         verify(exceptionHandler, never()).handleGrpcException(any());
-        verify(userStub).verifyUserEmail(confirmationToken);
+        verify(userStub).confirmUserEmail(confirmationToken);
     }
 
     @Test
-    void verifyUserEmail_ShouldBuildCorrectRequest() {
+    void confirmUserEmail_ShouldBuildCorrectRequest() {
 
         String token = "token";
 
         ConfirmationToken confirmationToken = ConfirmationToken.newBuilder().setToken(token).build();
 
-        when(userStub.verifyUserEmail(confirmationToken))
+        when(userStub.confirmUserEmail(confirmationToken))
                 .thenReturn(Empty.newBuilder().build());
 
-        grpcUserClient.verifyUserEmail(token);
+        grpcUserClient.confirmUserEmail(token);
 
         ArgumentCaptor<ConfirmationToken> captor = ArgumentCaptor.forClass(ConfirmationToken.class);
 
-        verify(userStub).verifyUserEmail(captor.capture());
+        verify(userStub).confirmUserEmail(captor.capture());
 
         ConfirmationToken value = captor.getValue();
 

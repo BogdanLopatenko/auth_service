@@ -9,12 +9,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GrpcClientConfig {
 
-    @GrpcClient(value = "user-service")
+    @GrpcClient("user-service")
     private Channel userChannel;
 
     @Bean
     public UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub() {
-
         return UserServiceGrpc.newBlockingStub(userChannel);
     }
 }

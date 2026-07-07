@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    discovery:
+      enabled: false
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+grpc:
+  timeout-delay: 1
+  client:
+    user-service:
+      address: 'in-process:test-channel'
