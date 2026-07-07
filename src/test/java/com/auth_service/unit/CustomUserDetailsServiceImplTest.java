@@ -1,9 +1,9 @@
-package com.auth_service.client.unit;
+package com.auth_service.unit;
 
-import com.auth_service.client.grpc.GrpcUserClient;
 import com.auth_service.dto.UserAuthDto;
 import com.auth_service.dto.security.CustomUserDetails;
 import com.auth_service.exception.user_service.UserNotFoundException;
+import com.auth_service.grpc.GrpcUserClient;
 import com.auth_service.security.service.impl.CustomUserDetailsServiceImpl;
 import com.auth_service.util.UserTestBuilder;
 import org.junit.jupiter.api.Test;

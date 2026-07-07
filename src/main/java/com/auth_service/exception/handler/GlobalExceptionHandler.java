@@ -4,12 +4,7 @@ import com.auth_service.dto.ErrorResponse;
 import com.auth_service.enums.ErrorCode;
 import com.auth_service.exception.InvalidRefreshTokenException;
 import com.auth_service.exception.mail_service.EmailNotFoundException;
-import com.auth_service.exception.user_service.EmailAlreadyActivatedException;
-import com.auth_service.exception.user_service.EmailConfirmationTokenExpirationException;
-import com.auth_service.exception.user_service.UserCredentialsConflictException;
-import com.auth_service.exception.user_service.UserEmailConfirmationNotFoundException;
-import com.auth_service.exception.user_service.UserNotFoundException;
-import com.auth_service.exception.user_service.UserServiceException;
+import com.auth_service.exception.user_service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -80,8 +75,8 @@ public class GlobalExceptionHandler {
                 Instant.now()));
     }
 
-    @ExceptionHandler(UserEmailConfirmationNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserEmailConfirmationNotFoundException(UserEmailConfirmationNotFoundException exception) {
+    @ExceptionHandler(EmailConfirmationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserEmailConfirmationNotFoundException(EmailConfirmationNotFoundException exception) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(
                 ErrorCode.USER_EMAIL_CONFIRMATION_NOT_FOUND,

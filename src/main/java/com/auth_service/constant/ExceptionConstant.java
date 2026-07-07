@@ -13,6 +13,8 @@ public final class ExceptionConstant {
 
     public static final String FAILED_TO_UNPACK = "Failed to unpack error details.";
 
+    public static final String GRPC_RESPONSE_TIMEOUT = "Grpc Response timeout";
+
 
     private ExceptionConstant() {
     }
