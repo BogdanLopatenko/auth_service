@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleEmailConfirmationTokenExpirationException(EmailConfirmationTokenExpirationException exception) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(
-                ErrorCode.USER_EMAIL_CONFIRMATION_TOKEN_EXPIRED,
+                ErrorCode.EMAIL_CONFIRMATION_TOKEN_EXPIRED,
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.value(),
                 Instant.now()));
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleUserEmailConfirmationNotFoundException(EmailConfirmationNotFoundException exception) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(
-                ErrorCode.USER_EMAIL_CONFIRMATION_NOT_FOUND,
+                ErrorCode.EMAIL_CONFIRMATION_NOT_FOUND,
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.value(),
                 Instant.now()));
