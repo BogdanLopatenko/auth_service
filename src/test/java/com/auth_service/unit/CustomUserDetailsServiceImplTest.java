@@ -26,7 +26,7 @@ class CustomUserDetailsServiceImplTest {
     private CustomUserDetailsServiceImpl userDetailsService;
 
     @Test
-    void loadByUsername_Success_shouldLoadUserByUsername() {
+    void shouldReturnUserWhenUserExist() {
 
         UserAuthDto dto = new UserTestBuilder().buildAuthDto();
 
@@ -54,7 +54,7 @@ class CustomUserDetailsServiceImplTest {
     }
 
     @Test
-    void loadByUsername_UserNotFound_ThrowsException() {
+    void shouldThrowUserNoyFoundExceptionWhileUserNotExist() {
 
         when(userClient.getByUsername("someusername"))
                 .thenThrow(new UserNotFoundException("user not found by username"));

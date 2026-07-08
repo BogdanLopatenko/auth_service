@@ -60,7 +60,7 @@ public class AuthServiceImplTest {
     private AuthServiceImpl authService;
 
     @Test
-    void register_ShouldRegisterUser_AndReturnTokens() {
+    void shouldRegisterUserAndReturnTokensWhenRegisterRequestIsValid() {
 
         UserRequestDto request = new UserTestBuilder().buildRequestDto();
         UserResponseDto createdUser = new UserTestBuilder().buildResponseDto();
@@ -109,7 +109,7 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    void login_ShouldAuthenticateUser_AndReturnTokens() {
+    void shouldAuthenticateUserAndReturnTokensWhenCredentialsAreValid() {
 
         AuthRequest request = new AuthRequest("john", "password");
 
@@ -147,7 +147,7 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    void refreshToken_ShouldGenerateNewTokens_WhenRefreshTokenValid() {
+    void shouldGenerateNewTokensWhenRefreshTokenIsValid() {
 
         String refreshToken = "refresh-token";
 
@@ -183,7 +183,7 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    void refreshToken_ShouldThrowException_WhenRefreshTokenInvalid() {
+    void shouldThrowExceptionWhenRefreshTokenIsInvalid() {
 
         String refreshToken = "invalid-token";
 
