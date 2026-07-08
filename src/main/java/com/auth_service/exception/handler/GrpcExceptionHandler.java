@@ -75,7 +75,7 @@ public class GrpcExceptionHandler {
                 return new EmailConfirmationNotFoundException(info.getMessage());
             case USER_EMAIL_CONFIRMATION_TOKEN_EXPIRED:
                 return new EmailConfirmationTokenExpirationException(info.getMessage());
-            case DEADLINE_EXCEED:
+            case TIMEOUT:
                 return new TimeoutException(info.getMessage());
             default:
                 return new UserServiceException(ExceptionConstant.USER_SERVICE_UNEXPECTED);
