@@ -6,7 +6,7 @@ public final class AuthConstant {
             
             Hello, this is registration mail.
             
-            Go to link below to pass email verification.
+            Go to link below to pass email confirmation.
             
             %s
             
@@ -16,7 +16,7 @@ public final class AuthConstant {
             
             Hello, this is reconfirmation mail.
             
-            Go to link below to verify your email.
+            Go to link below to confirm your email.
             
             %s
             
