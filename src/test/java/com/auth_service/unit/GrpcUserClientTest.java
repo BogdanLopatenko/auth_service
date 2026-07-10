@@ -54,7 +54,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void getByUsername_Success_ReturnsAuthDto() {
+    void shouldReturnAuthDtoWhenUserExists() {
 
         UserAuthDto userProtoAuthDto = new UserTestBuilder().buildProtoAuthDto();
 
@@ -77,7 +77,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void getByUsername_ShouldBuildCorrectRequest() {
+    void shouldBuildCorrectUsernameRequestWhenGetByUsername() {
 
         when(userStub.getByUsername(any()))
                 .thenReturn(
@@ -101,7 +101,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void getByUsername_WhenGrpcThrows_ShouldHandleException() {
+    void shouldHandleGrpcExceptionWhenGetByUsernameFails() {
 
         StatusRuntimeException grpcException =
                 new StatusRuntimeException(Status.NOT_FOUND);
@@ -130,7 +130,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void getUserByConfirmationToken_Success_ResponseDto() {
+    void shouldReturnUserResponseDtoWhenConfirmationTokenExists() {
 
         UserResponseDto userProtoResponseDto = new UserTestBuilder().buildProtoResponseDto();
         com.auth_service.dto.UserResponseDto userResponseDto = new UserTestBuilder().buildResponseDto();
@@ -152,7 +152,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void getUserByConfirmationToken_ShouldBuildCorrectRequest() {
+    void shouldBuildCorrectConfirmationTokenRequestWhenGetUserByConfirmationToken() {
 
         String token = "some token";
 
@@ -175,7 +175,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void create_Success_ReturnsResponseDto() {
+    void shouldReturnResponseDtoWhenUserIsCreated() {
 
         com.auth_service.dto.UserRequestDto userRequestDto = new UserTestBuilder().buildRequestDto();
 
@@ -207,7 +207,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void create_ShouldBuildCorrectRequest() {
+    void shouldBuildCorrectCreateUserRequestWhenCreate() {
 
         com.auth_service.dto.UserRequestDto userRequestDto = new UserTestBuilder().buildRequestDto();
         UserRequestDto requestDto1 = new UserTestBuilder().buildProtoRequestDto();
@@ -234,7 +234,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void generateEmailConfirmationToken_Success_ReturnsToken() {
+    void shouldReturnTokenWhenGenerateEmailConfirmationToken() {
 
         UserId userId = new UserTestBuilder().buildUserId();
 
@@ -251,7 +251,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void generateEmailConfirmationToken_ShouldBuildCorrectRequest() {
+    void shouldBuildCorrectUserIdRequestWhenGenerateEmailConfirmationToken() {
 
         Long userid = 2L;
 
@@ -272,7 +272,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void confirmUserEmail_Success_ShouldChangeUserStatus() {
+    void shouldChangeUserStatusWhenConfirmUserEmail() {
 
         ConfirmationToken confirmationToken = ConfirmationToken.newBuilder().setToken("token").build();
 
@@ -286,7 +286,7 @@ public class GrpcUserClientTest {
     }
 
     @Test
-    void confirmUserEmail_ShouldBuildCorrectRequest() {
+    void shouldBuildCorrectConfirmationTokenRequestWhenConfirmUserEmail() {
 
         String token = "token";
 

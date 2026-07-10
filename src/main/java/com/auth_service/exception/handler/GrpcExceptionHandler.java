@@ -71,11 +71,11 @@ public class GrpcExceptionHandler {
                 return new EmailAlreadyActivatedException(info.getMessage());
             case USERNAME_ALREADY_EXIST:
                 return new UsernameAlreadyExistException(info.getMessage());
-            case USER_EMAIL_CONFIRMATION_NOT_FOUND:
+            case EMAIL_CONFIRMATION_NOT_FOUND:
                 return new EmailConfirmationNotFoundException(info.getMessage());
-            case USER_EMAIL_CONFIRMATION_TOKEN_EXPIRED:
+            case EMAIL_CONFIRMATION_TOKEN_EXPIRED:
                 return new EmailConfirmationTokenExpirationException(info.getMessage());
-            case DEADLINE_EXCEED:
+            case TIMEOUT:
                 return new TimeoutException(info.getMessage());
             default:
                 return new UserServiceException(ExceptionConstant.USER_SERVICE_UNEXPECTED);

@@ -11,7 +11,6 @@ import com.user_service.generated.ConfirmationToken;
 import com.user_service.generated.UserId;
 import com.user_service.generated.UserServiceGrpc;
 import com.user_service.generated.Username;
-import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -38,7 +37,7 @@ public class GrpcUserClient implements UserClient {
 
             Username request = Username.newBuilder().setUsername(username).build();
 
-            com.user_service.generated.UserAuthDto response = userStub.withDeadlineAfter(grpcConfigurationProperties.timeoutDelay(), TimeUnit.SECONDS).getByUsername(request);
+            com.user_service.generated.UserAuthDto response = stubWithDeadline().getByUsername(request);
 
             return userMapper.toAuthDtoFromProto(response);
         });
@@ -51,7 +50,7 @@ public class GrpcUserClient implements UserClient {
 
             ConfirmationToken request = ConfirmationToken.newBuilder().setToken(token).build();
 
-            com.user_service.generated.UserResponseDto response = userStub.withDeadlineAfter(grpcConfigurationProperties.timeoutDelay(), TimeUnit.SECONDS).getUserByConfirmationToken(request);
+            com.user_service.generated.UserResponseDto response = stubWithDeadline().getUserByConfirmationToken(request);
 
             return userMapper.toResponseDtoFromProto(response);
         });
@@ -64,7 +63,7 @@ public class GrpcUserClient implements UserClient {
 
             com.user_service.generated.UserRequestDto request = userMapper.toProtoRequestDto(userRequestDto);
 
-            com.user_service.generated.UserResponseDto response = userStub.withDeadlineAfter(grpcConfigurationProperties.timeoutDelay(), TimeUnit.SECONDS).create(request);
+            com.user_service.generated.UserResponseDto response = stubWithDeadline().create(request);
 
             return userMapper.toResponseDtoFromProto(response);
         });
@@ -77,7 +76,7 @@ public class GrpcUserClient implements UserClient {
 
             UserId request = UserId.newBuilder().setId(userId).build();
 
-            ConfirmationToken confirmationToken = userStub.withDeadlineAfter(grpcConfigurationProperties.timeoutDelay(), TimeUnit.SECONDS).generateEmailConfirmationToken(request);
+            ConfirmationToken confirmationToken = stubWithDeadline().generateEmailConfirmationToken(request);
 
             return confirmationToken.getToken();
         });
@@ -90,7 +89,7 @@ public class GrpcUserClient implements UserClient {
 
             ConfirmationToken request = ConfirmationToken.newBuilder().setToken(token).build();
 
-            return userStub.withDeadlineAfter(grpcConfigurationProperties.timeoutDelay(), TimeUnit.SECONDS).confirmUserEmail(request);
+            return stubWithDeadline().confirmUserEmail(request);
         });
     }
 
@@ -103,5 +102,12 @@ public class GrpcUserClient implements UserClient {
 
             throw exceptionHandler.handleGrpcException(e);
         }
+    }
+
+    private UserServiceGrpc.UserServiceBlockingStub stubWithDeadline() {
+        return userStub.withDeadlineAfter(
+                grpcConfigurationProperties.timeoutDelay(),
+                TimeUnit.SECONDS
+        );
     }
 }

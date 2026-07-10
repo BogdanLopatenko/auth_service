@@ -95,7 +95,7 @@ public class GrpcUserClientTest {
 
         TestGrpcUserServer.setForcedError(GrpcTestUtil.createStatusRuntimeException(
                 Code.NOT_FOUND,
-                ErrorCode.USER_EMAIL_CONFIRMATION_NOT_FOUND,
+                ErrorCode.EMAIL_CONFIRMATION_NOT_FOUND,
                 "Email confirmation not found",
                 "Email confirmation Not found ny token" + invalidToken
         ));
@@ -183,7 +183,7 @@ public class GrpcUserClientTest {
 
         TestGrpcUserServer.setForcedError(GrpcTestUtil.createStatusRuntimeException(
                 Code.UNAUTHENTICATED,
-                ErrorCode.USER_EMAIL_CONFIRMATION_TOKEN_EXPIRED,
+                ErrorCode.EMAIL_CONFIRMATION_TOKEN_EXPIRED,
                 "Token had been expired",
                 "Token had been expired"
         ));
