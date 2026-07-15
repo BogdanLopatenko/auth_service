@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 @ActiveProfiles("test")
 @SpringBootTest
 @Import(GrpcTestConfig.class)
-public class CustomUserDetailsServiceImplTest {
+public class CustomUserDetailsServiceImplIT {
 
     @Autowired
     private CustomUserDetailsServiceImpl userDetailsService;

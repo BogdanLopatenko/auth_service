@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AuthServiceImplTest {
+public class AuthServiceImplIT {
 
     @Autowired
     private AuthServiceImpl authService;
