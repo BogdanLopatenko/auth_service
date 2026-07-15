@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @ActiveProfiles("test")
 @SpringBootTest
 @Import(GrpcTestConfig.class)
-public class GrpcUserClientTest {
+public class GrpcUserClientIT {
 
     @Autowired
     private UserClient client;
