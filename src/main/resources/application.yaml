@@ -33,6 +33,7 @@ spring:
       mailing: mailing
 
 grpc:
+  timeout-delay: 1
   client:
     user-service:
       address: "discovery:///user-service"
